@@ -42,6 +42,6 @@ int main(int argc, char *argv[])
 		if(win){
 			printWinMessage();
 		}
-	}
-	return 0;
+  	}
+	return   0;
 }

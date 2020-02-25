@@ -16,13 +16,13 @@ void printCell(Cell c){
 	if(c.value!=0){
 		int value= c.value;
 		if(c.fixed==1){
-			printf("%d. ",value);
+			printf("%2d. ",value);
 		}
 		else{
 			if(c.invalid==1){
-				printf("%d* ",value);
+				printf("%2d* ",value);
 			}
-			printf(" %d ",value);
+			printf(" %2d ",value);
 		}
 	}
 	else{
@@ -30,10 +30,10 @@ void printCell(Cell c){
 	}
 }
 /*print ----------- 34 times*/
-void printRowSepration(int m, int n){
+void printRowSepration(int row_block, int column_block){
 	int i=1;
-	int N =n*m;
-	for(i=1;i<=34;i++){
+	int N =row_block*column_block;
+	for(i=1;i<=4*N+row_block+1;i++){
 		printf("-");
 	}
 	printf("\n");
@@ -41,13 +41,14 @@ void printRowSepration(int m, int n){
 /*print part of the board game*/
 void printBlockRow(int i, Game game){
 	int j=1,k=0;
-	printRowSepration();
-	for(k=i;k<i+BLOCK_SIZE;k++){
-		for(j=1;j<=BOARD_SIZE;j++){
+	int N= game.column_block*game.row_block;
+	printRowSepration(game.row_block,game.column_block);
+	for(k=i;k<i+game.row_block;k++){
+		for(j=1;j<=N;j++){
 			if(j%BLOCK_SIZE==1){
 				printf("| ");
 			}
-			printCell((game.game_board[k][j]));
+			printCell((game.board[k][j]));
 		}
 		printf("|\n");
 	}
@@ -55,16 +56,17 @@ void printBlockRow(int i, Game game){
 /*print game board*/
 void printBoard(Game game){
 	int k;
-	for(k=0;k<BLOCK_SIZE;k++){
-		printBlockRow(k*BLOCK_SIZE +1, game);
+	for(k=0;k<game.row_block;k++){
+		printBlockRow(k*game.column_block +1, game);
 	}
-	printRowSepration();
+	printRowSepration(game.row_block,game.column_block);
 }
 /*fill cell to be empty cell*/
 void intilizeEmptyCell(Cell *c){
-	c->empty=1;
 	c->fixed=0;
-	c->number=-1;
+	c->value=0;
+	c->invalid=0;
+	printf("");
 
 }
 /*Create an empty board game*/
